@@ -5,6 +5,6 @@ package logica;
  * @authores: Anthony Chacin, carné: 20171110998
  *            Elías Arama, carné: 
  */
-public abstract class Productor {
+public class Productor {
        
 }
