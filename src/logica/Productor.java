@@ -6,5 +6,5 @@ package logica;
  *            Elías Arama, carné: 
  */
 public abstract class Productor {
-    
+       
 }
