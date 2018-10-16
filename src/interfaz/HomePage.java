@@ -5,17 +5,29 @@
  */
 package interfaz;
 
+import java.awt.Color;
+import logica.Aplicacion;
+import logica.Parametros;
+
 /**
  *
- * @author Anthony Chacin
+ * @autores: Anthony Chacin, carné: 20171110998
+ *            Elías Arama, carné: 20171110178
  */
 public class HomePage extends javax.swing.JFrame {
+    
+    Aplicacion app;
+    Parametros param;
 
     /**
      * Creates new form HomePage
      */
     public HomePage() {
         initComponents();
+        
+        app = new Aplicacion();
+        param = app.getParam();
+        this.inicializarParametros(param);
     }
 
     /**
@@ -108,6 +120,11 @@ public class HomePage extends javax.swing.JFrame {
         cableConexionLabel.setText("Cables:");
 
         textFieldProductorBaterias.setEditable(false);
+        textFieldProductorBaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldProductorBateriasActionPerformed(evt);
+            }
+        });
 
         textFieldProductorPantallas.setEditable(false);
 
@@ -243,6 +260,11 @@ public class HomePage extends javax.swing.JFrame {
         diasLabel.setText("Días para el despacho ");
 
         textFieldDias.setEditable(false);
+        textFieldDias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldDiasActionPerformed(evt);
+            }
+        });
 
         salir.setBackground(new java.awt.Color(0, 0, 0));
         salir.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -393,9 +415,9 @@ public class HomePage extends javax.swing.JFrame {
                                     .addComponent(productoresLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textFieldProductorBaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(contratarProductorBaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textFieldProductorBaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(despedirProductorBaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(5, 5, 5)
@@ -477,7 +499,7 @@ public class HomePage extends javax.swing.JFrame {
                                 .addComponent(diasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(textFieldDias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 19, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -493,6 +515,14 @@ public class HomePage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textFieldProductorBateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldProductorBateriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldProductorBateriasActionPerformed
+
+    private void textFieldDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldDiasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldDiasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -527,6 +557,16 @@ public class HomePage extends javax.swing.JFrame {
                 new HomePage().setVisible(true);
             }
         });
+        
+        
+    }
+    
+    public void inicializarParametros(Parametros param){
+        textFieldProductorBaterias.setText(String.valueOf(param.getNumIniProdBat()));
+        textFieldProductorPantallas.setText(String.valueOf(param.getNumIniProdPan()));
+        textFieldProductorCables.setText(String.valueOf(param.getNumIniProdCab()));
+        textFieldDias.setText(String.valueOf(param.getNumDiasEntreDespachos()));
+        textFieldEnsambladores.setText(String.valueOf(param.getNumIniEnsamb()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -578,4 +618,5 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldProductorCables;
     private javax.swing.JTextField textFieldProductorPantallas;
     // End of variables declaration//GEN-END:variables
+
 }
