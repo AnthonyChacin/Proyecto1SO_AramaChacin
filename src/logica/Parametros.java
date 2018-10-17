@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logica;
 
 import java.io.BufferedReader;
@@ -36,7 +32,17 @@ public class Parametros {
             FileReader fr=new FileReader(archivo);
             BufferedReader br=new BufferedReader(fr);
             
-            String str[] = br.readLine().split("\t");
+            String line;
+            //Leemos hasta llegar a la 5ta línea, que es donde se encuentran los parametros.
+            line=br.readLine();
+            line=br.readLine();
+            line=br.readLine();
+            line=br.readLine();
+            line=br.readLine();
+            
+            //Comienza a guardar en el vector sólo en la 5ta línea.
+            String str[] = line.split("\t\t");
+            
             this.unDiaEnSegs = Integer.parseInt(str[0]);
             this.numDiasEntreDespachos = Integer.parseInt(str[1]);
             this.maxAlmacBaterias = Integer.parseInt(str[2]);

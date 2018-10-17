@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logica;
 
 import interfaz.HomePage;
@@ -35,6 +31,22 @@ public class Aplicacion {
     
     public void main(){
         param = new Parametros("parametros_fabrica.txt");
+        
+        //En las siguientes lineas verificamos que los datos obtenidos del
+        //archivo de texto sean los correctos.
+        /*System.out.println(" " + param.getUnDiaEnSegs());
+        System.out.println(" " + param.getNumDiasEntreDespachos());
+        System.out.println(" " + param.getMaxAlmacBaterias());
+        System.out.println(" " + param.getMaxAlmacPantallas());
+        System.out.println(" " + param.getMaxAlmacCables());
+        System.out.println(" " + param.getNumIniProdBat());
+        System.out.println(" " + param.getNumMaxProdBat());
+        System.out.println(" " + param.getNumIniProdPan());
+        System.out.println(" " + param.getNumMaxProdPan());
+        System.out.println(" " + param.getNumIniProdCab());
+        System.out.println(" " + param.getNumMaxProdCab());
+        System.out.println(" " + param.getNumIniEnsamb());
+        System.out.println(" " + param.getNumMaxEnsamb());*/
     }
 
     public Parametros getParam() {
