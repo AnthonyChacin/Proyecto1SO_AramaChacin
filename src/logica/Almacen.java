@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logica;
 
 /**
@@ -12,4 +8,27 @@ package logica;
  */
 public class Almacen {
     
+    int[] vectorAlmacen;
+    int tamanioAlmacen;
+    
+    public Almacen(int tamanioAlmacen){
+        this.tamanioAlmacen = tamanioAlmacen;
+        vectorAlmacen = new int[tamanioAlmacen];
+    }
+
+    public int[] getVectorAlmacen() {
+        return vectorAlmacen;
+    }
+
+    public void setVectorAlmacen(int[] vectorAlmacen) {
+        this.vectorAlmacen = vectorAlmacen;
+    }
+
+    public int getTamanioAlmacen() {
+        return tamanioAlmacen;
+    }
+
+    public void setTamanioAlmacen(int tamanioAlmacen) {
+        this.tamanioAlmacen = tamanioAlmacen;
+    }
 }
