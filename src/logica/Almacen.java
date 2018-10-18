@@ -16,19 +16,21 @@ public class Almacen {
         vectorAlmacen = new int[tamanioAlmacen];
     }
 
-    public int[] getVectorAlmacen() {
-        return vectorAlmacen;
+    public int getVectorAlmacen(int i) {
+        return vectorAlmacen[i];
     }
 
-    public void setVectorAlmacen(int[] vectorAlmacen) {
-        this.vectorAlmacen = vectorAlmacen;
+    public void setVectorAlmacen(int i, int valor) {
+        this.vectorAlmacen[i] = valor;
     }
 
     public int getTamanioAlmacen() {
         return tamanioAlmacen;
     }
-
-    public void setTamanioAlmacen(int tamanioAlmacen) {
-        this.tamanioAlmacen = tamanioAlmacen;
+    public void imprimir(){
+        for(int i=0; i<tamanioAlmacen; i++){
+            System.out.print(vectorAlmacen[i]+" ");
+        }
+        System.out.println("");
     }
 }
