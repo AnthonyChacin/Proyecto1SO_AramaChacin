@@ -1,8 +1,6 @@
 package logica;
 
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,23 +29,10 @@ public abstract class Productor extends Thread {
     }
 
     @Override
-    public void run() {
-        while (true) {
-            try {
-                //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
-                sP.acquire();
-                sMutex.acquire();
-                almacen.setVectorAlmacen(proximoProducir, valor);
-                proximoProducir = (proximoProducir + 1) % almacen.getTamanioAlmacen();
-                Thread.sleep(param.getUnDiaEnSegs()*1000);
-                sMutex.release();
-                sC.release();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            almacen.imprimir();
+    public abstract void run();
 
-        }
+    public void producir() {
+        this.almacen.getAlmacen().add(1);
     }
 
 }

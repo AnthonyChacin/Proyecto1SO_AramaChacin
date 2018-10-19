@@ -552,12 +552,9 @@ public class HomePage extends javax.swing.JFrame {
     }
     
     public void inicializarParametros(Parametros param){
-        //textFieldProductorBaterias.setText(String.valueOf(this.app));
-        //textFieldProductorPantallas.setText(String.valueOf(param.getNumIniProdPan()));
-        //textFieldProductorCables.setText(String.valueOf(param.getNumIniProdCab()));
-        //textFieldDias.setText(String.valueOf(param.getNumDiasEntreDespachos()));
-       
-               
+        textFieldProductorBaterias.setText(String.valueOf(this.param.getNumIniProdBat()));
+        textFieldProductorPantallas.setText(String.valueOf(this.param.getNumIniProdPan()));
+        textFieldProductorCables.setText(String.valueOf(this.param.getNumIniProdCab()));      
     }
     
 
@@ -598,10 +595,10 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JButton salir;
     private javax.swing.JTextField separador1;
     private javax.swing.JTextField separador2;
-    private javax.swing.JTextField textFieldAlmacenBaterias;
-    private javax.swing.JTextField textFieldAlmacenCables;
-    private javax.swing.JTextField textFieldAlmacenPantallas;
-    private javax.swing.JTextField textFieldCelularesEnsamblados;
+    public static javax.swing.JTextField textFieldAlmacenBaterias;
+    public static javax.swing.JTextField textFieldAlmacenCables;
+    public static javax.swing.JTextField textFieldAlmacenPantallas;
+    public static javax.swing.JTextField textFieldCelularesEnsamblados;
     private javax.swing.JTextField textFieldCronometrador;
     private javax.swing.JTextField textFieldDias;
     private javax.swing.JTextField textFieldEnsambladores;

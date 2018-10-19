@@ -1,34 +1,32 @@
-
 package logica;
+
+import interfaz.HomePage;
+import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @autores: Anthony Chacin, carné: 20171110998
- *            Elías Arama, carné: 20171110178
+ * @autores: Anthony Chacin, carné: 20171110998 Elías Arama, carné: 20171110178
  */
-public class Ensamblador extends Thread{
+public class Ensamblador extends Thread {
     
+    private ArrayList<Integer> unidadesProducidas;
+    private Parametros param;
     //Todos los almacenes
     private Almacen aBaterias, aPantallas, aCables;
-    
+
     //Semaforos para poderproducir en los tres almacenes
     private Semaphore sPB, sPP, sPC;
-    
+
     //Semaforos para consumir de los tres almacenes
     private Semaphore sCB, sCP, sCC;
-    
+
     //Semaforos para la exclusión mutua de la zona crítica los tres almacenes 
     private Semaphore sMutexB, sMutexP, sMutexC;
-    
-    //Proximo a consumir de los tres almacenes 
-    private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
-    
-    private int valorB, valorP, valorC;
-    
-    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, int proximoConsumirB, int proximoConsumirP, int proximoConsumirC, int valorB, int valorP, int valorC){
+
+    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Parametros param, ArrayList<Integer> unidadesProducidas) {
         this.aBaterias = aBaterias;
         this.aPantallas = aPantallas;
         this.aCables = aCables;
@@ -41,56 +39,59 @@ public class Ensamblador extends Thread{
         this.sMutexB = sMutexB;
         this.sMutexP = sMutexP;
         this.sMutexC = sMutexC;
-        this.proximoConsumirB = proximoConsumirB;
-        this.proximoConsumirP = proximoConsumirP;
-        this.proximoConsumirC = proximoConsumirC;
-        this.valorB = valorB;
-        this.valorP = valorP;
-        this.valorC = valorC;
+        this.param = param;
+        this.unidadesProducidas = unidadesProducidas;
     }
-    
+
     @Override
-    public void run(){
-        while(true){
+    public void run() {
+        while (true) {
             try {
                 sCB.acquire();
+                sCP.acquire();
+                sCC.acquire(2);
+                
                 sMutexB.acquire();
-                int aux = proximoConsumirB;
-                aBaterias.setVectorAlmacen(proximoConsumirB, 0);
-                proximoConsumirB = (proximoConsumirB+1)%aBaterias.getTamanioAlmacen();
+                this.consumir(aBaterias, 1);
+                HomePage.textFieldAlmacenBaterias.setText("");
+                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(aBaterias.getAlmacen().size()));
+                Thread.sleep(this.param.getUnDiaEnSegs()*500);
                 sMutexB.release();
+                
+                sMutexP.acquire();
+                this.consumir(aPantallas, 2);
+                HomePage.textFieldAlmacenPantallas.setText("");
+                HomePage.textFieldAlmacenPantallas.setText(String.valueOf(aPantallas.getAlmacen().size()));
+                Thread.sleep(this.param.getUnDiaEnSegs()*500);
+                sMutexP.release();
+                
+                sMutexC.acquire();
+                this.consumir(aCables, 3);
+                HomePage.textFieldAlmacenCables.setText("");
+                HomePage.textFieldAlmacenCables.setText(String.valueOf(aCables.getAlmacen().size()));
+                Thread.sleep(this.param.getUnDiaEnSegs()*1000);
+                this.unidadesProducidas.add(1);
+                sMutexC.release();
+                
+                HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(unidadesProducidas.size()));
+                sPC.release(2);
+                sPP.release();
                 sPB.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try {
-                sCP.acquire();
-                sMutexP.acquire();
-                int aux = proximoConsumirP;
-                aPantallas.setVectorAlmacen(proximoConsumirP, 0);
-                proximoConsumirP = (proximoConsumirP+1)%aPantallas.getTamanioAlmacen();
-                sMutexP.release();
-                sPP.release();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                sCC.acquire(2);
-                sMutexC.acquire();
-                int aux = proximoConsumirC;
-                aCables.setVectorAlmacen(proximoConsumirC, 0);
-                proximoConsumirC = (proximoConsumirC+2)%aCables.getTamanioAlmacen();
-                sMutexC.release();
-                sPC.release(2);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
-    
+
+    public void consumir(Almacen almacen, int tipo) {
+
+        if (tipo == 3) {
+            int position = almacen.getAlmacen().size() - 1;
+            almacen.getAlmacen().remove(position);
+        }
+
+        int position = almacen.getAlmacen().size() - 1;
+        almacen.getAlmacen().remove(position);
+    }
+
 }

@@ -1,6 +1,8 @@
 
 package logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @autores: Anthony Chacin, carné: 20171110998
@@ -8,29 +10,18 @@ package logica;
  */
 public class Almacen {
     
-    int[] vectorAlmacen;
-    int tamanioAlmacen;
+    ArrayList<Integer> almacen;
     
-    public Almacen(int tamanioAlmacen){
-        this.tamanioAlmacen = tamanioAlmacen;
-        vectorAlmacen = new int[tamanioAlmacen];
+    public Almacen(){
+        almacen = new ArrayList<>();
     }
 
-    public int getVectorAlmacen(int i) {
-        return vectorAlmacen[i];
+    public ArrayList<Integer> getAlmacen() {
+        return almacen;
     }
 
-    public void setVectorAlmacen(int i, int valor) {
-        this.vectorAlmacen[i] = valor;
+    public void setAlmacen(ArrayList<Integer> almacen) {
+        this.almacen = almacen;
     }
-
-    public int getTamanioAlmacen() {
-        return tamanioAlmacen;
-    }
-    public void imprimir(){
-        for(int i=0; i<tamanioAlmacen; i++){
-            System.out.print(vectorAlmacen[i]+" ");
-        }
-        System.out.println("");
-    }
+    
 }
