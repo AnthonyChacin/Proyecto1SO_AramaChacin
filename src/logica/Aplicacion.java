@@ -21,6 +21,7 @@ public class Aplicacion {
     private Semaphore sConsumidorBateria, sConsumidorPantalla, sConsumidorCable;
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
+    static int celularesEnsamblados;
     
     public Aplicacion(){
         main();
@@ -50,6 +51,7 @@ public class Aplicacion {
         this.proximoConsumirB = 0;
         this.proximoConsumirP = 0;
         this.proximoConsumirC = 0;
+        celularesEnsamblados = 0;
         
         this.inicializarEnsamblador(param);
         this.inicializarProductores(param);

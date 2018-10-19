@@ -23,10 +23,9 @@ public class ProductorCableConexion extends Productor {
                 sP.acquire();
                 Thread.sleep(param.getUnDiaEnSegs()*1000);
                 sMutex.acquire();
+                this.producir();
                 HomePage.textFieldAlmacenCables.setText("");
                 HomePage.textFieldAlmacenCables.setText(String.valueOf(this.almacen.getCantUnidades()));
-                this.producir();
-                //Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sMutex.release();
                 sC.release(2);
             } catch (InterruptedException ex) {

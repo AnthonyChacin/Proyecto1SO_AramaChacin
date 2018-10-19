@@ -1,6 +1,7 @@
 package logica;
 
 import interfaz.HomePage;
+import logica.Aplicacion;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,28 +52,29 @@ public class Ensamblador extends Thread {
                 sCB.acquire();
                 sCP.acquire();
                 sCC.acquire(2);
-
+                
+                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
+                
                 sMutexB.acquire();
+                this.consumir(aBaterias, 1);
                 HomePage.textFieldAlmacenBaterias.setText("");
                 HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.aBaterias.getCantUnidades()));
-                this.consumir(aBaterias, 1);
                 sMutexB.release();
 
                 sMutexP.acquire();
+                this.consumir(aPantallas, 2);
                 HomePage.textFieldAlmacenPantallas.setText("");
                 HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.aPantallas.getCantUnidades()));
-                this.consumir(aPantallas, 2);
                 sMutexP.release();
 
                 sMutexC.acquire();
+                this.consumir(aCables, 3);
                 HomePage.textFieldAlmacenCables.setText("");
                 HomePage.textFieldAlmacenCables.setText(String.valueOf(this.aCables.getCantUnidades()));
-                this.consumir(aCables, 3);
-                Thread.sleep(this.param.getUnDiaEnSegs()*1000*2);
-                //this.unidadesProducidas.add(1);
-                //HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(unidadesProducidas.size()));
-                //Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
                 sMutexC.release();
+                
+                Aplicacion.celularesEnsamblados++;
+                HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.celularesEnsamblados));
                 
                 sPC.release(2);
                 sPP.release();

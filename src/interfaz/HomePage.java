@@ -1,4 +1,3 @@
-
 package interfaz;
 
 import java.awt.Color;
@@ -7,11 +6,10 @@ import logica.Parametros;
 
 /**
  *
- * @autores: Anthony Chacin, carné: 20171110998
- *            Elías Arama, carné: 20171110178
+ * @autores: Anthony Chacin, carné: 20171110998 Elías Arama, carné: 20171110178
  */
 public class HomePage extends javax.swing.JFrame {
-    
+
     private Aplicacion app;
     Parametros param;
 
@@ -20,11 +18,11 @@ public class HomePage extends javax.swing.JFrame {
      */
     public HomePage() {
         initComponents();
-        
+
         this.app = new Aplicacion();
         param = app.getParam();
         this.inicializarParametros(param);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -516,7 +514,6 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldDiasActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -547,16 +544,19 @@ public class HomePage extends javax.swing.JFrame {
                 new HomePage().setVisible(true);
             }
         });
-        
-        
+
     }
-    
-    public void inicializarParametros(Parametros param){
+
+    public void inicializarParametros(Parametros param) {
         textFieldProductorBaterias.setText(String.valueOf(this.param.getNumIniProdBat()));
         textFieldProductorPantallas.setText(String.valueOf(this.param.getNumIniProdPan()));
-        textFieldProductorCables.setText(String.valueOf(this.param.getNumIniProdCab()));      
+        textFieldProductorCables.setText(String.valueOf(this.param.getNumIniProdCab()));
+        textFieldCelularesEnsamblados.setText(String.valueOf(0));
+        textFieldAlmacenBaterias.setText(String.valueOf(0));
+        textFieldAlmacenCables.setText(String.valueOf(0));
+        textFieldAlmacenPantallas.setText(String.valueOf(0));
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel almacenBateriasLabel;

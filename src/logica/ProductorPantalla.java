@@ -23,10 +23,9 @@ public class ProductorPantalla extends Productor {
                 sP.acquire();
                 Thread.sleep(param.getUnDiaEnSegs()*1000*2);
                 sMutex.acquire();
+                this.producir();
                 HomePage.textFieldAlmacenPantallas.setText("");
                 HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.almacen.getCantUnidades()));
-                this.producir();
-                //Thread.sleep(param.getUnDiaEnSegs() * 1000 * 2);
                 sMutex.release();
                 sC.release();
             } catch (InterruptedException ex) {
