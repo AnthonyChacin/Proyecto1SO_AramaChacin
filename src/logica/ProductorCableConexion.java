@@ -17,17 +17,15 @@ public class ProductorCableConexion extends Productor {
 
     @Override
     public void run() {
-        while (true) {
+        while (this.contratado) {
             try {
-                //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
-                Thread.sleep(param.getUnDiaEnSegs()*1000);
+                
                 sMutex.acquire();
                 this.producir();
-                //HomePage.textFieldAlmacenCables.setText("");
-                //HomePage.textFieldAlmacenCables.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
-                sC.release(2);
+                Thread.sleep(param.getUnDiaEnSegs()*1000);
+                sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorCableConexion.class.getName()).log(Level.SEVERE, null, ex);
             }

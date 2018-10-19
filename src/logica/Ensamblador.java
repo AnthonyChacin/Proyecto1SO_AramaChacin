@@ -1,6 +1,5 @@
 package logica;
 
-import interfaz.HomePage;
 import logica.Aplicacion;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -25,6 +24,7 @@ public class Ensamblador extends Thread {
     //Semaforos para la exclusión mutua de la zona crítica los tres almacenes 
     private Semaphore sMutexB, sMutexP, sMutexC;
     private int proxCB, proxCP, proxCC;
+    private boolean contratado = true;
 
     public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Parametros param, int proxCB, int proxCP, int proxCC) {
         this.aBaterias = aBaterias;
@@ -47,62 +47,64 @@ public class Ensamblador extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (this.contratado) {
             try {
                 sCB.acquire();
                 sCP.acquire();
                 sCC.acquire(2);
-                
-                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
-                
+
                 sMutexB.acquire();
                 this.consumir(aBaterias, 1);
-                //HomePage.textFieldAlmacenBaterias.setText("");
-                //HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.aBaterias.getCantUnidades()));
                 sMutexB.release();
 
                 sMutexP.acquire();
                 this.consumir(aPantallas, 2);
-                //HomePage.textFieldAlmacenPantallas.setText("");
-                //HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.aPantallas.getCantUnidades()));
                 sMutexP.release();
 
                 sMutexC.acquire();
                 this.consumir(aCables, 3);
-                //HomePage.textFieldAlmacenCables.setText("");
-                //HomePage.textFieldAlmacenCables.setText(String.valueOf(this.aCables.getCantUnidades()));
                 sMutexC.release();
-                
+
                 Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
-                //HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.celularesEnsamblados));
+                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
                 
                 sPC.release(2);
                 sPP.release();
                 sPB.release();
 
             } catch (InterruptedException ex) {
-                Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public void consumir(Almacen almacen, int tipo) {
+    public void consumir(Almacen almacen, int tipo){
 
-        if (tipo == 1) {
-            almacen.setVAlmacen(this.proxCB, 0);
-            this.proxCB = (this.proxCB + 1) % almacen.getTAlmacen();
-            almacen.cantUnidades--;
-        } else if (tipo == 2) {
-            almacen.setVAlmacen(this.proxCP, 0);
-            this.proxCP = (this.proxCP + 1) % almacen.getTAlmacen();
-            almacen.cantUnidades--;
-        } else if (tipo == 3) {
-            almacen.setVAlmacen(this.proxCC, 0);
-            this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
-            almacen.setVAlmacen(this.proxCC, 0);
-            this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
-            almacen.cantUnidades--;
-            almacen.cantUnidades--;
+        switch (tipo) {
+            case 1:
+                almacen.setVAlmacen(this.proxCB, 0);
+                this.proxCB = (this.proxCB + 1) % almacen.getTAlmacen();
+                almacen.cantUnidades--;
+                break;
+            case 2:
+                almacen.setVAlmacen(this.proxCP, 0);
+                this.proxCP = (this.proxCP + 1) % almacen.getTAlmacen();
+                almacen.cantUnidades--;
+                break;
+            case 3:
+                almacen.setVAlmacen(this.proxCC, 0);
+                this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
+                //almacen.setVAlmacen(this.proxCC, 0);
+                this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
+                almacen.cantUnidades--;
+                almacen.cantUnidades--;
+                break;
+            default:
+                break;
         }
+    }
+
+    public void setContratado(boolean contratado) {
+        this.contratado = contratado;
     }
 }

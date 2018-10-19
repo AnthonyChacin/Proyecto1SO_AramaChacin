@@ -16,6 +16,7 @@ public abstract class Productor extends Thread {
     protected int proximoProducir;
     protected int valor;
     protected int tp;
+    protected boolean contratado = true;
 
     public Productor(Almacen almacen, Semaphore sP, Semaphore sC, Semaphore sMutex, int proximoProducir, int valor, Parametros param, int tp) {
         this.almacen = almacen;
@@ -35,5 +36,9 @@ public abstract class Productor extends Thread {
         almacen.setVAlmacen(this.proximoProducir, this.valor);
         almacen.cantUnidades++;
         this.proximoProducir = (this.proximoProducir + 1) % almacen.getTAlmacen();
+    }
+
+    public void setContratado(boolean contratado) {
+        this.contratado = contratado;
     }
 }

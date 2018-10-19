@@ -132,36 +132,66 @@ public class HomePage extends javax.swing.JFrame {
         contratarProductorBaterias.setForeground(new java.awt.Color(255, 255, 255));
         contratarProductorBaterias.setText("Contratar");
         contratarProductorBaterias.setBorder(null);
+        contratarProductorBaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contratarProductorBateriasActionPerformed(evt);
+            }
+        });
 
         contratarProductorPantallas.setBackground(new java.awt.Color(6, 65, 33));
         contratarProductorPantallas.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         contratarProductorPantallas.setForeground(new java.awt.Color(255, 255, 255));
         contratarProductorPantallas.setText("Contratar");
         contratarProductorPantallas.setBorder(null);
+        contratarProductorPantallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contratarProductorPantallasActionPerformed(evt);
+            }
+        });
 
         contratarProductorCables.setBackground(new java.awt.Color(6, 65, 33));
         contratarProductorCables.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         contratarProductorCables.setForeground(new java.awt.Color(255, 255, 255));
         contratarProductorCables.setText("Contratar");
         contratarProductorCables.setBorder(null);
+        contratarProductorCables.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contratarProductorCablesActionPerformed(evt);
+            }
+        });
 
         despedirProductorBaterias.setBackground(new java.awt.Color(153, 0, 0));
         despedirProductorBaterias.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         despedirProductorBaterias.setForeground(new java.awt.Color(255, 255, 255));
         despedirProductorBaterias.setText("Despedir");
         despedirProductorBaterias.setBorder(null);
+        despedirProductorBaterias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                despedirProductorBateriasActionPerformed(evt);
+            }
+        });
 
         despedirProductorPantallas.setBackground(new java.awt.Color(153, 0, 0));
         despedirProductorPantallas.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         despedirProductorPantallas.setForeground(new java.awt.Color(255, 255, 255));
         despedirProductorPantallas.setText("Despedir");
         despedirProductorPantallas.setBorder(null);
+        despedirProductorPantallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                despedirProductorPantallasActionPerformed(evt);
+            }
+        });
 
         despedirProductorCables.setBackground(new java.awt.Color(153, 0, 0));
         despedirProductorCables.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         despedirProductorCables.setForeground(new java.awt.Color(255, 255, 255));
         despedirProductorCables.setText("Despedir");
         despedirProductorCables.setBorder(null);
+        despedirProductorCables.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                despedirProductorCablesActionPerformed(evt);
+            }
+        });
 
         almacenImagenLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/almacen.png"))); // NOI18N
 
@@ -211,12 +241,22 @@ public class HomePage extends javax.swing.JFrame {
         contratarEnsamblador.setForeground(new java.awt.Color(255, 255, 255));
         contratarEnsamblador.setText("Contratar");
         contratarEnsamblador.setBorder(null);
+        contratarEnsamblador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contratarEnsambladorActionPerformed(evt);
+            }
+        });
 
         despedirEnsamblador.setBackground(new java.awt.Color(153, 0, 0));
         despedirEnsamblador.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         despedirEnsamblador.setForeground(new java.awt.Color(255, 255, 255));
         despedirEnsamblador.setText("Despedir");
         despedirEnsamblador.setBorder(null);
+        despedirEnsamblador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                despedirEnsambladorActionPerformed(evt);
+            }
+        });
 
         celularEnsambladoImagenLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/celular_listo.png"))); // NOI18N
 
@@ -268,6 +308,11 @@ public class HomePage extends javax.swing.JFrame {
         salir.setForeground(new java.awt.Color(255, 255, 255));
         salir.setText("Salir");
         salir.setBorder(null);
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -521,6 +566,42 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldDiasActionPerformed
 
+    private void contratarProductorBateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contratarProductorBateriasActionPerformed
+        app.contratarProductorBateria();
+    }//GEN-LAST:event_contratarProductorBateriasActionPerformed
+
+    private void contratarProductorPantallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contratarProductorPantallasActionPerformed
+        app.contratarProductorPantalla();
+    }//GEN-LAST:event_contratarProductorPantallasActionPerformed
+
+    private void contratarProductorCablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contratarProductorCablesActionPerformed
+        app.contratarProductorCableConexion();
+    }//GEN-LAST:event_contratarProductorCablesActionPerformed
+
+    private void contratarEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contratarEnsambladorActionPerformed
+        app.contratarEnsamblador();
+    }//GEN-LAST:event_contratarEnsambladorActionPerformed
+
+    private void despedirProductorBateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despedirProductorBateriasActionPerformed
+        app.despedirProductorBateria();
+    }//GEN-LAST:event_despedirProductorBateriasActionPerformed
+
+    private void despedirProductorPantallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despedirProductorPantallasActionPerformed
+        app.despedirProductorPantalla();
+    }//GEN-LAST:event_despedirProductorPantallasActionPerformed
+
+    private void despedirProductorCablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despedirProductorCablesActionPerformed
+        app.despedirProductorCableConexion();
+    }//GEN-LAST:event_despedirProductorCablesActionPerformed
+
+    private void despedirEnsambladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_despedirEnsambladorActionPerformed
+        app.despedirEnsamblador();
+    }//GEN-LAST:event_despedirEnsambladorActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -558,11 +639,8 @@ public class HomePage extends javax.swing.JFrame {
         textFieldProductorBaterias.setText(String.valueOf(this.param.getNumIniProdBat()));
         textFieldProductorPantallas.setText(String.valueOf(this.param.getNumIniProdPan()));
         textFieldProductorCables.setText(String.valueOf(this.param.getNumIniProdCab()));
-        //textFieldCelularesEnsamblados.setText(String.valueOf(0));
-        //textFieldAlmacenBaterias.setText(String.valueOf(0));
-        //textFieldAlmacenCables.setText(String.valueOf(0));
-        //textFieldAlmacenPantallas.setText(String.valueOf(0));
         textFieldEnsambladores.setText(String.valueOf(this.param.getNumIniEnsamb()));
+        textFieldDias.setText(String.valueOf(this.param.getNumDiasEntreDespachos()));
     }
     
     public void actualizarInterfaz(){
@@ -571,8 +649,14 @@ public class HomePage extends javax.swing.JFrame {
         textFieldAlmacenPantallas.setText(String.valueOf(app.getaPantallas().getCantUnidades()));
         textFieldAlmacenCables.setText(String.valueOf(app.getaCables().getCantUnidades()));
         
+        //Actualizar productores
+        textFieldProductorBaterias.setText(String.valueOf(app.getCantProductoresB()));
+        textFieldProductorPantallas.setText(String.valueOf(app.getCantProductoresP()));
+        textFieldProductorCables.setText(String.valueOf(app.getCantProductoresC()));
+        textFieldEnsambladores.setText(String.valueOf(app.getCantEnsambladores()));
+        
         //Actualizar celulares ensamblados
-        textFieldCelularesEnsamblados.setText(String.valueOf(app.getCelularesEnsamblados()));
+        textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.getCelularesEnsamblados()));
         
         //Actualizar cronometrador
         
@@ -580,7 +664,8 @@ public class HomePage extends javax.swing.JFrame {
         
         //Actualizar dias para el despacho
     }
-
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel almacenBateriasLabel;

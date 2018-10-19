@@ -449,6 +449,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contratarProductorBateriasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="contratarProductorPantallas">
           <Properties>
@@ -466,6 +469,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contratarProductorPantallasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="contratarProductorCables">
           <Properties>
@@ -483,6 +489,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contratarProductorCablesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="despedirProductorBaterias">
           <Properties>
@@ -500,6 +509,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="despedirProductorBateriasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="despedirProductorPantallas">
           <Properties>
@@ -517,6 +529,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="despedirProductorPantallasActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="despedirProductorCables">
           <Properties>
@@ -534,6 +549,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="despedirProductorCablesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="almacenImagenLabel">
           <Properties>
@@ -669,6 +687,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contratarEnsambladorActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="despedirEnsamblador">
           <Properties>
@@ -686,6 +707,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="despedirEnsambladorActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="celularEnsambladoImagenLabel">
           <Properties>
@@ -816,6 +840,9 @@
               <Border info="null"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salirActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

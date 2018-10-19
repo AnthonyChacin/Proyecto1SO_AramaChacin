@@ -22,6 +22,7 @@ public class Aplicacion {
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
     private static int celularesEnsamblados;
+    private int cantProductoresB, cantProductoresP, cantProductoresC, cantEnsambladores; 
     
     public Aplicacion(){
         main();
@@ -51,7 +52,11 @@ public class Aplicacion {
         this.proximoConsumirB = 0;
         this.proximoConsumirP = 0;
         this.proximoConsumirC = 0;
-        this.celularesEnsamblados = 0;
+        this.cantProductoresB = 0;
+        this.cantProductoresP = 0;
+        this.cantProductoresC = 0;
+        this.cantEnsambladores = 0;
+        celularesEnsamblados = 0;
         
         this.inicializarEnsamblador(param);
         this.inicializarProductores(param);
@@ -64,33 +69,162 @@ public class Aplicacion {
     public void inicializarProductores(Parametros param){
         
         //Inicializar productores de baterias
-        for(int i = 0; i < param.getNumIniProdBat(); i++){
-            this.productoresBaterias[i] = new ProductorBateria(this.aBaterias,this.sProductorBateria,this.sConsumidorBateria,this.sMutexBateria, this.proximoProducirB,1, param, 1);
+        for(int i = 0; i < this.param.getNumIniProdBat(); i++){
+            this.contratarProductorBateria();
         }
-        this.productoresBaterias[0].start();
-        this.productoresBaterias[1].start();
         
         //Inicializar productores de pantallas
-        for(int i = 0; i < param.getNumIniProdPan(); i++){
-            this.productoresPantallas[i] = new ProductorPantalla(this.aPantallas,this.sProductorPantalla,this.sConsumidorPantalla,this.sMutexPantalla, this.proximoProducirP,1, param, 2);
+        for(int i = 0; i < this.param.getNumIniProdPan(); i++){
+            this.contratarProductorPantalla();
         }
-        this.productoresPantallas[0].start();
-        this.productoresPantallas[1].start();
-        this.productoresPantallas[2].start();
         
         //Inicializar productores de cables de conexión
-        for(int i = 0; i < param.getNumMaxProdCab(); i++){
-            this.productoresCables[i] = new ProductorCableConexion(this.aCables,this.sProductorCable,this.sConsumidorCable,this.sMutexCable, this.proximoProducirC,1, param, 3);
-        }
-        this.productoresCables[0].start();   
+        for(int i = 0; i < this.param.getNumIniProdCab(); i++){
+            this.contratarProductorCableConexion();
+        }  
     }
     
     public void inicializarEnsamblador(Parametros param){
         
-        for(int i = 0; i < param.getNumIniEnsamb(); i++){
-            this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
+        for(int i = 0; i < this.param.getNumIniEnsamb(); i++){
+            this.contratarEnsamblador();
         }
-        this.ensambladores[0].start();
+    }
+    
+    public void contratarProductorBateria(){
+        int cont=0;
+        for(int i = 0; i < this.productoresBaterias.length; i++){
+            if(this.productoresBaterias[i] == null){
+                this.productoresBaterias[i] = new ProductorBateria(this.aBaterias,this.sProductorBateria,this.sConsumidorBateria,this.sMutexBateria, this.proximoProducirB,1, param, 1);;
+                this.productoresBaterias[i].start();
+                this.cantProductoresB++;
+                break;
+            }
+            cont++;
+        }
+        if(cont == this.productoresBaterias.length){
+            System.out.println("Ha alcanzado el límite de productores de baterias ("+ this.param.getNumMaxProdBat()+")");
+        }else{
+            System.out.println("Productor de baterias contratado con éxito");
+        }
+    }
+    
+    public void despedirProductorBateria(){
+        int i = this.cantProductoresB;
+        if(i > 0){
+            this.productoresBaterias[i-1].setContratado(false);
+            this.productoresBaterias[i-1] = null;
+            this.cantProductoresB--;
+            System.out.println("Productor de baterias despedido con éxito");
+        }else{
+            System.out.println("Ya ha despedido a todos los productores de batería");
+        }
+    }
+    
+    public void contratarProductorPantalla(){
+        int cont=0;
+        for(int i = 0; i < this.productoresPantallas.length; i++){
+            if(this.productoresPantallas[i] == null){
+                this.productoresPantallas[i] = new ProductorPantalla(this.aPantallas,this.sProductorPantalla,this.sConsumidorPantalla,this.sMutexPantalla, this.proximoProducirP,1, param, 2);
+                this.productoresPantallas[i].start();
+                this.cantProductoresP++;
+                break;
+            }
+            cont++;
+        }
+        if(cont == this.productoresPantallas.length){
+            System.out.println("Ha alcanzado el límite de productores de pantallas ("+ this.param.getNumMaxProdPan()+")");
+        }else{
+            System.out.println("Productor de pantallas contratado con éxito");
+        }
+    }
+    
+    public void despedirProductorPantalla(){
+        int i = this.cantProductoresP;
+        if(i > 0){
+            this.productoresPantallas[i-1].setContratado(false);
+            this.productoresPantallas[i-1] = null;
+            this.cantProductoresP--;
+            System.out.println("Productor de pantallas despedido con éxito");
+        }else{
+            System.out.println("Ya ha despedido a todos los productores de pantallas");
+        }
+    }
+ 
+    public void contratarProductorCableConexion(){
+        int cont=0;
+        for(int i = 0; i < this.productoresCables.length; i++){
+            if(this.productoresCables[i] == null){
+                this.productoresCables[i] = new ProductorCableConexion(this.aCables,this.sProductorCable,this.sConsumidorCable,this.sMutexCable, this.proximoProducirC,1, param, 3);
+                this.productoresCables[i].start();
+                this.cantProductoresC++;
+                break;
+            }
+            cont++;
+        }
+        if(cont == this.productoresCables.length){
+            System.out.println("Ha alcanzado el límite de productores de cables de conexión ("+ this.param.getNumMaxProdCab()+")");
+        }else{
+            System.out.println("Productor de cables de conexión contratado con éxito");
+        }
+    }
+     
+    public void despedirProductorCableConexion(){
+        int i = this.cantProductoresC;
+        if(i > 0){
+            this.productoresCables[i-1].setContratado(false);
+            this.productoresCables[i-1] = null;
+            this.cantProductoresC--;
+            System.out.println("Productor de cables de conexión despedido con éxito");
+        }else{
+            System.out.println("Ya ha despedido a todos los productores de cables de conexión");
+        }
+    }
+    
+    public void contratarEnsamblador(){
+        int cont=0;
+        for(int i = 0; i < this.ensambladores.length; i++){
+            if(this.ensambladores[i] == null){
+                this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
+                this.ensambladores[i].start();
+                this.cantEnsambladores++;
+                break;
+            }
+            cont++;
+        }
+        if(cont == this.ensambladores.length){
+            System.out.println("Ha alcanzado el límite de ensambladores ("+ this.param.getNumMaxEnsamb()+")");
+        }else{
+            System.out.println("Ensamblador contratado con éxito");
+        }
+    }
+    
+    public void despedirEnsamblador(){
+        int i = this.cantEnsambladores;
+        if(i > 0){
+            this.ensambladores[i-1].setContratado(false);
+            this.ensambladores[i-1] = null;
+            this.cantEnsambladores--;
+            System.out.println("Ensamblador despedido con éxito");
+        }else{
+            System.out.println("Ya ha despedido a todos los ensambladores");
+        }
+    }
+
+    public int getCantProductoresB() {
+        return cantProductoresB;
+    }
+
+    public int getCantProductoresP() {
+        return cantProductoresP;
+    }
+
+    public int getCantProductoresC() {
+        return cantProductoresC;
+    }
+
+    public int getCantEnsambladores() {
+        return cantEnsambladores;
     }
 
     public Almacen getaBaterias() {

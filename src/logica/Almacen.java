@@ -44,6 +44,22 @@ public class Almacen {
         this.cantUnidades = cantUnidades;
     }
     
+    public void imprimirAlmacen(){
+        for(int i=0; i<vAlmacen.length; i++){
+            System.out.print(vAlmacen[i] + " ");
+        }
+        System.out.println("");
+    }
+    
+    public int unidadesAlmacen(){
+        int cont = 0;
+        for(int i=0; i<vAlmacen.length; i++){
+            if(vAlmacen[i] == 1){
+                cont++;
+            }
+        }
+        return cont;
+    }
     
     
     public int getTAlmacen() {

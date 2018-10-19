@@ -17,16 +17,15 @@ public class ProductorPantalla extends Productor {
 
     @Override
     public void run() {
-        while (true) {
+        while (this.contratado) {
             try {
                 //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
-                Thread.sleep(param.getUnDiaEnSegs()*1000*2);
+                
                 sMutex.acquire();
                 this.producir();
-                //HomePage.textFieldAlmacenPantallas.setText("");
-                //HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
+                Thread.sleep(param.getUnDiaEnSegs()*1000*2);
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorPantalla.class.getName()).log(Level.SEVERE, null, ex);

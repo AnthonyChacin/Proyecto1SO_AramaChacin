@@ -17,16 +17,15 @@ public class ProductorBateria extends Productor {
 
     @Override
     public void run() {
-        while (true) {
+        while (this.contratado) {
             try {
-                //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
+                
                 sP.acquire();
-                Thread.sleep(param.getUnDiaEnSegs()*1000);
+                
                 sMutex.acquire();
                 this.producir();
-                //HomePage.textFieldAlmacenBaterias.setText("");
-                //HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
+                Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
