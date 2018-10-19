@@ -1,6 +1,10 @@
 
 package logica;
 
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @autores: Anthony Chacin, carné: 20171110998
@@ -12,20 +16,55 @@ public class Cronometrador extends Thread {
     private double horasEscribiendo;
     private double horasDurmiendo;
     private int diaEnSegundos;
+    private Semaphore sContador;
+    private String estatus;
+    private Parametros param;
     
-    public Cronometrador(int contador, int diaEnSegundos){
-        this.contador = contador;
-        this.diaEnSegundos = diaEnSegundos;
+    public Cronometrador(Semaphore sContador, Parametros param){
+        this.sContador = sContador;
+        this.contador = param.getNumDiasEntreDespachos();
+        this.diaEnSegundos = param.getUnDiaEnSegs();
         this.horasEscribiendo = ((this.diaEnSegundos*1000)/24)*1.5;
         this.horasDurmiendo = (this.diaEnSegundos*1000) - this.horasEscribiendo;
-    }
-    
-    public void configurarHoras(){
-        
+        this.estatus = "Durmiendo";
+        this.param = param;
     }
     
     @Override
     public void run(){
         
+        int horasE = (int)this.horasEscribiendo;
+        int horasD = (int)this.horasDurmiendo;
+        String estatus1 = "Disminuyendo contador";
+        String estatus2 = "Durmiendo";
+        
+        while(true){
+            try {
+                
+                this.sContador.acquire();
+                this.estatus = estatus1;
+                Thread.sleep(horasE);
+                this.contador--;
+                
+                if(this.contador < 0){
+                    this.contador = this.param.getNumDiasEntreDespachos();
+                }
+                sContador.release();
+                this.estatus = estatus2;
+                Thread.sleep(horasD);
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Cronometrador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     } 
+
+    public String getEstatus() {
+        return this.estatus;
+    }
+
+    public int getContador() {
+        return contador;
+    }
 }

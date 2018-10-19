@@ -14,11 +14,13 @@ public class Aplicacion {
     private ProductorBateria[] productoresBaterias;
     private ProductorPantalla[] productoresPantallas;
     private ProductorCableConexion[] productoresCables;
+    private Cronometrador cronometrador;
     private Ensamblador[] ensambladores;
     private Semaphore sProductorBateria, sMutexBateria;
     private Semaphore sProductorPantalla, sMutexPantalla;
     private Semaphore sProductorCable, sMutexCable;
     private Semaphore sConsumidorBateria, sConsumidorPantalla, sConsumidorCable;
+    private Semaphore sContador;
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
     private static int celularesEnsamblados;
@@ -46,6 +48,7 @@ public class Aplicacion {
         this.sProductorCable = new Semaphore(param.getMaxAlmacCables());
         this.sConsumidorCable = new Semaphore(0);
         this.sMutexCable = new Semaphore(1);
+        this.sContador = new Semaphore(1);
         this.proximoProducirB = 0;
         this.proximoProducirP = 0;
         this.proximoProducirC = 0;
@@ -58,15 +61,22 @@ public class Aplicacion {
         this.cantEnsambladores = 0;
         celularesEnsamblados = 0;
         
-        this.inicializarEnsamblador(param);
-        this.inicializarProductores(param);
+        this.cronometrador = new Cronometrador(sContador, this.param);
+        this.cronometrador.start();
+        
+        this.inicializarEnsamblador();
+        this.inicializarProductores();
     }
 
     public Parametros getParam() {
         return param;
     }
+
+    public Cronometrador getCronometrador() {
+        return cronometrador;
+    }
     
-    public void inicializarProductores(Parametros param){
+    public void inicializarProductores(){
         
         //Inicializar productores de baterias
         for(int i = 0; i < this.param.getNumIniProdBat(); i++){
@@ -84,7 +94,7 @@ public class Aplicacion {
         }  
     }
     
-    public void inicializarEnsamblador(Parametros param){
+    public void inicializarEnsamblador(){
         
         for(int i = 0; i < this.param.getNumIniEnsamb(); i++){
             this.contratarEnsamblador();
