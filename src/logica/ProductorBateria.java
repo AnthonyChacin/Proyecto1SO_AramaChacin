@@ -24,8 +24,8 @@ public class ProductorBateria extends Productor {
                 Thread.sleep(param.getUnDiaEnSegs()*1000);
                 sMutex.acquire();
                 this.producir();
-                HomePage.textFieldAlmacenBaterias.setText("");
-                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.almacen.getCantUnidades()));
+                //HomePage.textFieldAlmacenBaterias.setText("");
+                //HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
                 sC.release();
             } catch (InterruptedException ex) {

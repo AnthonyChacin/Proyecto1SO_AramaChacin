@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
 import logica.Aplicacion;
 import logica.Parametros;
 
@@ -23,6 +25,11 @@ public class HomePage extends javax.swing.JFrame {
         param = app.getParam();
         this.inicializarParametros(param);
 
+        Timer timer = new Timer(100, (ActionEvent ae) -> { // Actualizar interfaz cada 100ms (0,1s)
+            this.actualizarInterfaz();
+            
+        });
+        timer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -551,10 +558,27 @@ public class HomePage extends javax.swing.JFrame {
         textFieldProductorBaterias.setText(String.valueOf(this.param.getNumIniProdBat()));
         textFieldProductorPantallas.setText(String.valueOf(this.param.getNumIniProdPan()));
         textFieldProductorCables.setText(String.valueOf(this.param.getNumIniProdCab()));
-        textFieldCelularesEnsamblados.setText(String.valueOf(0));
-        textFieldAlmacenBaterias.setText(String.valueOf(0));
-        textFieldAlmacenCables.setText(String.valueOf(0));
-        textFieldAlmacenPantallas.setText(String.valueOf(0));
+        //textFieldCelularesEnsamblados.setText(String.valueOf(0));
+        //textFieldAlmacenBaterias.setText(String.valueOf(0));
+        //textFieldAlmacenCables.setText(String.valueOf(0));
+        //textFieldAlmacenPantallas.setText(String.valueOf(0));
+        textFieldEnsambladores.setText(String.valueOf(this.param.getNumIniEnsamb()));
+    }
+    
+    public void actualizarInterfaz(){
+        //Actualizar almacen
+        textFieldAlmacenBaterias.setText(String.valueOf(app.getaBaterias().getCantUnidades()));
+        textFieldAlmacenPantallas.setText(String.valueOf(app.getaPantallas().getCantUnidades()));
+        textFieldAlmacenCables.setText(String.valueOf(app.getaCables().getCantUnidades()));
+        
+        //Actualizar celulares ensamblados
+        textFieldCelularesEnsamblados.setText(String.valueOf(app.getCelularesEnsamblados()));
+        
+        //Actualizar cronometrador
+        
+        //Actualizar gerente
+        
+        //Actualizar dias para el despacho
     }
 
 

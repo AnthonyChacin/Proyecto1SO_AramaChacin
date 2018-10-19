@@ -57,24 +57,24 @@ public class Ensamblador extends Thread {
                 
                 sMutexB.acquire();
                 this.consumir(aBaterias, 1);
-                HomePage.textFieldAlmacenBaterias.setText("");
-                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.aBaterias.getCantUnidades()));
+                //HomePage.textFieldAlmacenBaterias.setText("");
+                //HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.aBaterias.getCantUnidades()));
                 sMutexB.release();
 
                 sMutexP.acquire();
                 this.consumir(aPantallas, 2);
-                HomePage.textFieldAlmacenPantallas.setText("");
-                HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.aPantallas.getCantUnidades()));
+                //HomePage.textFieldAlmacenPantallas.setText("");
+                //HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.aPantallas.getCantUnidades()));
                 sMutexP.release();
 
                 sMutexC.acquire();
                 this.consumir(aCables, 3);
-                HomePage.textFieldAlmacenCables.setText("");
-                HomePage.textFieldAlmacenCables.setText(String.valueOf(this.aCables.getCantUnidades()));
+                //HomePage.textFieldAlmacenCables.setText("");
+                //HomePage.textFieldAlmacenCables.setText(String.valueOf(this.aCables.getCantUnidades()));
                 sMutexC.release();
                 
-                Aplicacion.celularesEnsamblados++;
-                HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.celularesEnsamblados));
+                Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
+                //HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.celularesEnsamblados));
                 
                 sPC.release(2);
                 sPP.release();
