@@ -2,7 +2,6 @@
 package logica;
 
 import interfaz.HomePage;
-import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -22,7 +21,6 @@ public class Aplicacion {
     private Semaphore sConsumidorBateria, sConsumidorPantalla, sConsumidorCable;
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
-    private ArrayList<Integer> unidadesProducidas;
     
     public Aplicacion(){
         main();
@@ -30,9 +28,9 @@ public class Aplicacion {
     
     public void main(){
         param = new Parametros("parametros_fabrica.txt");
-        this.aBaterias = new Almacen();
-        this.aPantallas = new Almacen();
-        this.aCables = new Almacen();
+        this.aBaterias = new Almacen(param.getMaxAlmacBaterias());
+        this.aPantallas = new Almacen(param.getMaxAlmacPantallas());
+        this.aCables = new Almacen(param.getMaxAlmacCables());
         this.productoresBaterias = new ProductorBateria[param.getNumMaxProdBat()];
         this.productoresPantallas = new ProductorPantalla[param.getNumMaxProdPan()];
         this.productoresCables = new ProductorCableConexion[param.getNumMaxProdCab()];
@@ -46,7 +44,12 @@ public class Aplicacion {
         this.sProductorCable = new Semaphore(param.getMaxAlmacCables());
         this.sConsumidorCable = new Semaphore(0);
         this.sMutexCable = new Semaphore(1);
-        this.unidadesProducidas = new ArrayList<>();
+        this.proximoProducirB = 0;
+        this.proximoProducirP = 0;
+        this.proximoProducirC = 0;
+        this.proximoConsumirB = 0;
+        this.proximoConsumirP = 0;
+        this.proximoConsumirC = 0;
         
         this.inicializarEnsamblador(param);
         this.inicializarProductores(param);
@@ -83,7 +86,7 @@ public class Aplicacion {
     public void inicializarEnsamblador(Parametros param){
         
         for(int i = 0; i < param.getNumIniEnsamb(); i++){
-            this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.unidadesProducidas);
+            this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
         }
         this.ensambladores[0].start();
     }

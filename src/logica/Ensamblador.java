@@ -1,7 +1,6 @@
 package logica;
 
 import interfaz.HomePage;
-import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,8 +10,7 @@ import java.util.logging.Logger;
  * @autores: Anthony Chacin, carné: 20171110998 Elías Arama, carné: 20171110178
  */
 public class Ensamblador extends Thread {
-    
-    private ArrayList<Integer> unidadesProducidas;
+
     private Parametros param;
     //Todos los almacenes
     private Almacen aBaterias, aPantallas, aCables;
@@ -25,8 +23,9 @@ public class Ensamblador extends Thread {
 
     //Semaforos para la exclusión mutua de la zona crítica los tres almacenes 
     private Semaphore sMutexB, sMutexP, sMutexC;
+    private int proxCB, proxCP, proxCC;
 
-    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Parametros param, ArrayList<Integer> unidadesProducidas) {
+    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Parametros param, int proxCB, int proxCP, int proxCC) {
         this.aBaterias = aBaterias;
         this.aPantallas = aPantallas;
         this.aCables = aCables;
@@ -40,7 +39,9 @@ public class Ensamblador extends Thread {
         this.sMutexP = sMutexP;
         this.sMutexC = sMutexC;
         this.param = param;
-        this.unidadesProducidas = unidadesProducidas;
+        this.proxCB = proxCB;
+        this.proxCP = proxCP;
+        this.proxCC = proxCC;
     }
 
     @Override
@@ -50,33 +51,33 @@ public class Ensamblador extends Thread {
                 sCB.acquire();
                 sCP.acquire();
                 sCC.acquire(2);
-                
+
                 sMutexB.acquire();
-                this.consumir(aBaterias, 1);
                 HomePage.textFieldAlmacenBaterias.setText("");
-                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(aBaterias.getAlmacen().size()));
-                Thread.sleep(this.param.getUnDiaEnSegs()*500);
+                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.aBaterias.getCantUnidades()));
+                this.consumir(aBaterias, 1);
                 sMutexB.release();
-                
+
                 sMutexP.acquire();
-                this.consumir(aPantallas, 2);
                 HomePage.textFieldAlmacenPantallas.setText("");
-                HomePage.textFieldAlmacenPantallas.setText(String.valueOf(aPantallas.getAlmacen().size()));
-                Thread.sleep(this.param.getUnDiaEnSegs()*500);
+                HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.aPantallas.getCantUnidades()));
+                this.consumir(aPantallas, 2);
                 sMutexP.release();
-                
+
                 sMutexC.acquire();
-                this.consumir(aCables, 3);
                 HomePage.textFieldAlmacenCables.setText("");
-                HomePage.textFieldAlmacenCables.setText(String.valueOf(aCables.getAlmacen().size()));
-                Thread.sleep(this.param.getUnDiaEnSegs()*1000);
-                this.unidadesProducidas.add(1);
+                HomePage.textFieldAlmacenCables.setText(String.valueOf(this.aCables.getCantUnidades()));
+                this.consumir(aCables, 3);
+                Thread.sleep(this.param.getUnDiaEnSegs()*1000*2);
+                //this.unidadesProducidas.add(1);
+                //HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(unidadesProducidas.size()));
+                //Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
                 sMutexC.release();
                 
-                HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(unidadesProducidas.size()));
                 sPC.release(2);
                 sPP.release();
                 sPB.release();
+
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -85,13 +86,21 @@ public class Ensamblador extends Thread {
 
     public void consumir(Almacen almacen, int tipo) {
 
-        if (tipo == 3) {
-            int position = almacen.getAlmacen().size() - 1;
-            almacen.getAlmacen().remove(position);
+        if (tipo == 1) {
+            almacen.setVAlmacen(this.proxCB, 0);
+            this.proxCB = (this.proxCB + 1) % almacen.getTAlmacen();
+            almacen.cantUnidades--;
+        } else if (tipo == 2) {
+            almacen.setVAlmacen(this.proxCP, 0);
+            this.proxCP = (this.proxCP + 1) % almacen.getTAlmacen();
+            almacen.cantUnidades--;
+        } else if (tipo == 3) {
+            almacen.setVAlmacen(this.proxCC, 0);
+            this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
+            almacen.setVAlmacen(this.proxCC, 0);
+            this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
+            almacen.cantUnidades--;
+            almacen.cantUnidades--;
         }
-
-        int position = almacen.getAlmacen().size() - 1;
-        almacen.getAlmacen().remove(position);
     }
-
 }

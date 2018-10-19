@@ -32,7 +32,8 @@ public abstract class Productor extends Thread {
     public abstract void run();
 
     public void producir() {
-        this.almacen.getAlmacen().add(1);
+        almacen.setVAlmacen(this.proximoProducir, this.valor);
+        almacen.cantUnidades++;
+        this.proximoProducir = (this.proximoProducir + 1) % almacen.getTAlmacen();
     }
-
 }

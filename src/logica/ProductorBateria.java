@@ -21,12 +21,12 @@ public class ProductorBateria extends Productor {
             try {
                 //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
+                Thread.sleep(param.getUnDiaEnSegs()*1000);
                 sMutex.acquire();
-                this.producir();
                 HomePage.textFieldAlmacenBaterias.setText("");
-                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(almacen.getAlmacen().size()));
-                System.out.println(" " + almacen.getAlmacen().size());
-                Thread.sleep(param.getUnDiaEnSegs() * 1000);
+                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.almacen.getCantUnidades()));
+                this.producir();
+                //Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sMutex.release();
                 sC.release();
             } catch (InterruptedException ex) {

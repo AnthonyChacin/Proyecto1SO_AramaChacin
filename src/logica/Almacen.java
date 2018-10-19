@@ -10,18 +10,51 @@ import java.util.ArrayList;
  */
 public class Almacen {
     
-    ArrayList<Integer> almacen;
+    private int tAlmacen;
+    private int[] vAlmacen;
+    int cantUnidades;
     
-    public Almacen(){
-        almacen = new ArrayList<>();
+    public Almacen(int tAlmacen){
+        this.tAlmacen = tAlmacen;
+        this.vAlmacen = new int[this.tAlmacen];
+        this.cantUnidades = 0;
+    } 
+
+    public int gettAlmacen() {
+        return tAlmacen;
     }
 
-    public ArrayList<Integer> getAlmacen() {
-        return almacen;
+    public void settAlmacen(int tAlmacen) {
+        this.tAlmacen = tAlmacen;
     }
 
-    public void setAlmacen(ArrayList<Integer> almacen) {
-        this.almacen = almacen;
+    public int[] getvAlmacen() {
+        return vAlmacen;
+    }
+
+    public void setvAlmacen(int[] vAlmacen) {
+        this.vAlmacen = vAlmacen;
+    }
+
+    public int getCantUnidades() {
+        return cantUnidades;
+    }
+
+    public void setCantUnidades(int cantUnidades) {
+        this.cantUnidades = cantUnidades;
     }
     
+    
+    
+    public int getTAlmacen() {
+        return this.tAlmacen;
+    }
+
+    public int getVec(int i) {
+        return this.vAlmacen[i];
+    }
+
+    public void setVAlmacen(int i, int val) {
+        this.vAlmacen[i] = val;
+    }
 }

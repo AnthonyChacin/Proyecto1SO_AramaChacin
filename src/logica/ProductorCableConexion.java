@@ -21,12 +21,12 @@ public class ProductorCableConexion extends Productor {
             try {
                 //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
+                Thread.sleep(param.getUnDiaEnSegs()*1000);
                 sMutex.acquire();
-                this.producir();
                 HomePage.textFieldAlmacenCables.setText("");
-                HomePage.textFieldAlmacenCables.setText(String.valueOf(almacen.getAlmacen().size()));
-                System.out.println(" " + almacen.getAlmacen().size());
-                Thread.sleep(param.getUnDiaEnSegs() * 1000);
+                HomePage.textFieldAlmacenCables.setText(String.valueOf(this.almacen.getCantUnidades()));
+                this.producir();
+                //Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sMutex.release();
                 sC.release(2);
             } catch (InterruptedException ex) {
