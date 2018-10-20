@@ -23,6 +23,10 @@ public class Aplicacion {
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
     private static int celularesEnsamblados;
     private int cantProductoresB, cantProductoresP, cantProductoresC, cantEnsambladores; 
+    private Gerente gerente;
+    private Cronometrador cronometrador;
+    private int contador;
+    private Semaphore sMutexContador;
     
     public Aplicacion(){
         main();
@@ -60,6 +64,14 @@ public class Aplicacion {
         
         this.inicializarEnsamblador(param);
         this.inicializarProductores(param);
+        
+        this.contador = param.getNumDiasEntreDespachos();
+        this.sMutexContador = new Semaphore(1);
+        this.cronometrador = new Cronometrador(param, contador, sMutexContador);
+        this.cronometrador.start();
+        this.gerente = new Gerente(param, contador, sMutexContador, celularesEnsamblados);
+        this.gerente.start();
+        
     }
 
     public Parametros getParam() {
@@ -107,6 +119,7 @@ public class Aplicacion {
         }else{
             System.out.println("Productor de baterias contratado con éxito");
         }
+        HomePage.textFieldProductorBaterias.setText(String.valueOf(this.cantProductoresB));
     }
     
     public void despedirProductorBateria(){
@@ -119,6 +132,7 @@ public class Aplicacion {
         }else{
             System.out.println("Ya ha despedido a todos los productores de batería");
         }
+        HomePage.textFieldProductorBaterias.setText(String.valueOf(this.cantProductoresB));
     }
     
     public void contratarProductorPantalla(){
@@ -137,6 +151,7 @@ public class Aplicacion {
         }else{
             System.out.println("Productor de pantallas contratado con éxito");
         }
+        HomePage.textFieldProductorPantallas.setText(String.valueOf(this.cantProductoresP));
     }
     
     public void despedirProductorPantalla(){
@@ -149,6 +164,7 @@ public class Aplicacion {
         }else{
             System.out.println("Ya ha despedido a todos los productores de pantallas");
         }
+        HomePage.textFieldProductorPantallas.setText(String.valueOf(this.cantProductoresP));
     }
  
     public void contratarProductorCableConexion(){
@@ -167,6 +183,7 @@ public class Aplicacion {
         }else{
             System.out.println("Productor de cables de conexión contratado con éxito");
         }
+        HomePage.textFieldProductorCables.setText(String.valueOf(this.cantProductoresC));
     }
      
     public void despedirProductorCableConexion(){
@@ -179,6 +196,7 @@ public class Aplicacion {
         }else{
             System.out.println("Ya ha despedido a todos los productores de cables de conexión");
         }
+        HomePage.textFieldProductorCables.setText(String.valueOf(this.cantProductoresC));
     }
     
     public void contratarEnsamblador(){
@@ -197,6 +215,7 @@ public class Aplicacion {
         }else{
             System.out.println("Ensamblador contratado con éxito");
         }
+        HomePage.textFieldEnsambladores.setText(String.valueOf(this.cantEnsambladores));
     }
     
     public void despedirEnsamblador(){
@@ -209,6 +228,7 @@ public class Aplicacion {
         }else{
             System.out.println("Ya ha despedido a todos los ensambladores");
         }
+        HomePage.textFieldEnsambladores.setText(String.valueOf(this.cantEnsambladores));
     }
 
     public int getCantProductoresB() {

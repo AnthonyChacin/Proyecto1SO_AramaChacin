@@ -22,10 +22,12 @@ public class ProductorPantalla extends Productor {
                 //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
                 
+                Thread.sleep((long) (param.getUnDiaEnSegs()*1000*2));
                 sMutex.acquire();
                 this.producir();
+                HomePage.textFieldAlmacenPantallas.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
-                Thread.sleep(param.getUnDiaEnSegs()*1000*2);
+                
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorPantalla.class.getName()).log(Level.SEVERE, null, ex);

@@ -22,10 +22,12 @@ public class ProductorBateria extends Productor {
                 
                 sP.acquire();
                 
+                Thread.sleep((long) (param.getUnDiaEnSegs() * 1000));
                 sMutex.acquire();
                 this.producir();
+                
+                HomePage.textFieldAlmacenBaterias.setText(String.valueOf(this.almacen.getCantUnidades()));
                 sMutex.release();
-                Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);

@@ -13,8 +13,8 @@ import java.util.logging.Logger;
  * @author Elias
  */
 public class Parametros {
-    private int unDiaEnSegs,
-                numDiasEntreDespachos,
+    private float unDiaEnSegs;
+    private int numDiasEntreDespachos,
                 maxAlmacBaterias,
                 maxAlmacPantallas,
                 maxAlmacCables,
@@ -63,7 +63,7 @@ public class Parametros {
         }
     }
 
-    public int getUnDiaEnSegs() {
+    public float getUnDiaEnSegs() {
         return unDiaEnSegs;
     }
 
