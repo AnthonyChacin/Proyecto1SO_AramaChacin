@@ -58,7 +58,6 @@ public class Gerente extends Thread{
                     Aplicacion.setCelularesEnsamblados(0);
                     this.sContador.release();
                     Thread.sleep(horasRestantes);
-                    this.status = "...";
                 }
                 
             } catch (InterruptedException ex) {
