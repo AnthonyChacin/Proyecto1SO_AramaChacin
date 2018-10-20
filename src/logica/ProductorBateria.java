@@ -21,11 +21,11 @@ public class ProductorBateria extends Productor {
             try {
                 
                 sP.acquire();
-                
+                Thread.sleep(param.getUnDiaEnSegs() * 1000);
                 sMutex.acquire();
                 this.producir();
                 sMutex.release();
-                Thread.sleep(param.getUnDiaEnSegs() * 1000);
+                
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorBateria.class.getName()).log(Level.SEVERE, null, ex);

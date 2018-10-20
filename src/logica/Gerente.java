@@ -38,13 +38,14 @@ public class Gerente extends Thread{
         
         int menor = (int)this.horaMenor;
         int mayor = (int)this.horaMayor;
-        this.horasDurmiendo = r.nextInt((mayor-menor)) + menor;
+        
         String estatus1 = "Durmiendo";
         String estatus2 = "Despachando";
-        int horasRestantes = (this.diaEnSegundos*1000) - this.horasDurmiendo;
+        int horasRestantes;
         
         while(true){
-            
+            this.horasDurmiendo = r.nextInt((mayor-menor)) + menor;
+            horasRestantes = (this.diaEnSegundos*1000) - this.horasDurmiendo;
             try {
                 this.sContador.acquire();
                 
@@ -52,7 +53,7 @@ public class Gerente extends Thread{
                     sContador.release();
                     this.status = estatus1;
                     Thread.sleep(this.horasDurmiendo);
-                    this.status = "...";
+                     this.status = "Leyendo";
                 }else{
                     this.status = estatus2;
                     Aplicacion.setCelularesEnsamblados(0);

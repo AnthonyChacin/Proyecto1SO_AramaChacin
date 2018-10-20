@@ -20,11 +20,11 @@ public class ProductorCableConexion extends Productor {
         while (this.contratado) {
             try {
                 sP.acquire();
-                
+                Thread.sleep(param.getUnDiaEnSegs()*1000);
                 sMutex.acquire();
                 this.producir();
                 sMutex.release();
-                Thread.sleep(param.getUnDiaEnSegs()*1000);
+                
                 sC.release();
             } catch (InterruptedException ex) {
                 Logger.getLogger(ProductorCableConexion.class.getName()).log(Level.SEVERE, null, ex);
