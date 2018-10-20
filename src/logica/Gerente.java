@@ -54,6 +54,7 @@ public class Gerente extends Thread{
                     this.status = estatus1;
                     Thread.sleep(this.horasDurmiendo);
                      this.status = "Leyendo";
+                     Thread.sleep(horasRestantes);
                 }else{
                     this.status = estatus2;
                     Aplicacion.setCelularesEnsamblados(0);
