@@ -15,6 +15,7 @@ public class Aplicacion {
     private ProductorPantalla[] productoresPantallas;
     private ProductorCableConexion[] productoresCables;
     private Cronometrador cronometrador;
+    private Gerente gerente;
     private Ensamblador[] ensambladores;
     private Semaphore sProductorBateria, sMutexBateria;
     private Semaphore sProductorPantalla, sMutexPantalla;
@@ -64,6 +65,9 @@ public class Aplicacion {
         this.cronometrador = new Cronometrador(sContador, this.param);
         this.cronometrador.start();
         
+        this.gerente = new Gerente(sContador, this.param, this.cronometrador);
+        this.gerente.start();
+        
         this.inicializarEnsamblador();
         this.inicializarProductores();
     }
@@ -74,6 +78,10 @@ public class Aplicacion {
 
     public Cronometrador getCronometrador() {
         return cronometrador;
+    }
+
+    public Gerente getGerente() {
+        return gerente;
     }
     
     public void inicializarProductores(){

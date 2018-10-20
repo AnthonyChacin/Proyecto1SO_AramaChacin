@@ -41,25 +41,34 @@ public class Gerente extends Thread{
         this.horasDurmiendo = r.nextInt((mayor-menor)) + menor;
         String estatus1 = "Durmiendo";
         String estatus2 = "Despachando";
+        int horasRestantes = (this.diaEnSegundos*1000) - this.horasDurmiendo;
         
         while(true){
             
             try {
                 this.sContador.acquire();
+                
                 if(this.cronometrador.getContador() != 0){
                     sContador.release();
                     this.status = estatus1;
-                    
+                    Thread.sleep(this.horasDurmiendo);
+                    this.status = "...";
                 }else{
                     this.status = estatus2;
-                    
+                    Aplicacion.setCelularesEnsamblados(0);
+                    this.sContador.release();
+                    Thread.sleep(horasRestantes);
+                    this.status = "...";
                 }
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(Gerente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           
-            
+            }   
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
     
 }

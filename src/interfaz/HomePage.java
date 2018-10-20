@@ -660,8 +660,10 @@ public class HomePage extends javax.swing.JFrame {
         
         //Actualizar cronometrador
         textFieldCronometrador.setText(app.getCronometrador().getEstatus());
-        //Actualizar gerente
         
+        //Actualizar gerente
+        textFieldGerente.setText(app.getGerente().getStatus());
+                
         //Actualizar dias para el despacho
         textFieldDias.setText(String.valueOf(app.getCronometrador().getContador()));
     }
