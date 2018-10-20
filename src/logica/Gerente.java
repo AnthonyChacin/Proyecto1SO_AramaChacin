@@ -49,12 +49,13 @@ public class Gerente extends Thread{
             try {
                 this.sContador.acquire();
                 
+                this.status = "Leyendo";
+                Thread.sleep(horasRestantes);
                 if(this.cronometrador.getContador() != 0){
                     sContador.release();
                     this.status = estatus1;
                     Thread.sleep(this.horasDurmiendo);
-                     this.status = "Leyendo";
-                     Thread.sleep(horasRestantes);
+                     
                 }else{
                     this.status = estatus2;
                     Aplicacion.setCelularesEnsamblados(0);
