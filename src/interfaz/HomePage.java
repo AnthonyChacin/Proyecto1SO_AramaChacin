@@ -25,7 +25,7 @@ public class HomePage extends javax.swing.JFrame {
         param = app.getParam();
         this.inicializarParametros(param);
 
-        Timer timer = new Timer(100, (ActionEvent ae) -> { // Actualizar interfaz cada 100ms (0,1s)
+        Timer timer = new Timer(1, (ActionEvent ae) -> { // Actualizar interfaz cada 1ms (0,001s)
             this.actualizarInterfaz();
             
         });
