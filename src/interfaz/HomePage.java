@@ -24,12 +24,14 @@ public class HomePage extends javax.swing.JFrame {
         this.app = new Aplicacion();
         param = app.getParam();
         this.inicializarParametros(param);
-
+        /*
+        // Nota sobre el timer: no considere que el timer podria tratar de chequear al mismo tiempo que se está modificando algún dato.
+        //                      Es más seguro dejar que cada thread se encargue de decirle a la interfaz que lo muestre
         Timer timer = new Timer(100, (ActionEvent ae) -> { // Actualizar interfaz cada 100ms (0,1s)
             this.actualizarInterfaz();
             
         });
-        timer.start();
+        timer.start();*/
     }
 
     @SuppressWarnings("unchecked")
@@ -124,6 +126,11 @@ public class HomePage extends javax.swing.JFrame {
         });
 
         textFieldProductorPantallas.setEditable(false);
+        textFieldProductorPantallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldProductorPantallasActionPerformed(evt);
+            }
+        });
 
         textFieldProductorCables.setEditable(false);
 
@@ -235,6 +242,11 @@ public class HomePage extends javax.swing.JFrame {
         ensambladoresLabel.setText("Ensambladores:");
 
         textFieldEnsambladores.setEditable(false);
+        textFieldEnsambladores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldEnsambladoresActionPerformed(evt);
+            }
+        });
 
         contratarEnsamblador.setBackground(new java.awt.Color(6, 65, 33));
         contratarEnsamblador.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
@@ -288,6 +300,11 @@ public class HomePage extends javax.swing.JFrame {
         gerenteLabel.setText("Gerente");
 
         textFieldGerente.setEditable(false);
+        textFieldGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldGerenteActionPerformed(evt);
+            }
+        });
 
         diasImagenLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dias_faltantes.png"))); // NOI18N
 
@@ -602,6 +619,18 @@ public class HomePage extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
+    private void textFieldProductorPantallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldProductorPantallasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldProductorPantallasActionPerformed
+
+    private void textFieldEnsambladoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldEnsambladoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldEnsambladoresActionPerformed
+
+    private void textFieldGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldGerenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldGerenteActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -708,13 +737,13 @@ public class HomePage extends javax.swing.JFrame {
     public static javax.swing.JTextField textFieldAlmacenCables;
     public static javax.swing.JTextField textFieldAlmacenPantallas;
     public static javax.swing.JTextField textFieldCelularesEnsamblados;
-    private javax.swing.JTextField textFieldCronometrador;
-    private javax.swing.JTextField textFieldDias;
-    private javax.swing.JTextField textFieldEnsambladores;
-    private javax.swing.JTextField textFieldGerente;
-    private javax.swing.JTextField textFieldProductorBaterias;
-    private javax.swing.JTextField textFieldProductorCables;
-    private javax.swing.JTextField textFieldProductorPantallas;
+    public static javax.swing.JTextField textFieldCronometrador;
+    public static javax.swing.JTextField textFieldDias;
+    public static javax.swing.JTextField textFieldEnsambladores;
+    public static javax.swing.JTextField textFieldGerente;
+    public static javax.swing.JTextField textFieldProductorBaterias;
+    public static javax.swing.JTextField textFieldProductorCables;
+    public static javax.swing.JTextField textFieldProductorPantallas;
     // End of variables declaration//GEN-END:variables
 
 }

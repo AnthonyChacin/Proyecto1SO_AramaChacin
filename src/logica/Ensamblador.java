@@ -1,5 +1,6 @@
 package logica;
 
+import interfaz.HomePage;
 import logica.Aplicacion;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -66,7 +67,8 @@ public class Ensamblador extends Thread {
                 sMutexC.release();
 
                 Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
-                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
+                Thread.sleep((long) (this.param.getUnDiaEnSegs() * 1000 * 2));
+                HomePage.textFieldCelularesEnsamblados.setText(String.valueOf(Aplicacion.getCelularesEnsamblados()));
                 
                 sPC.release(2);
                 sPP.release();
