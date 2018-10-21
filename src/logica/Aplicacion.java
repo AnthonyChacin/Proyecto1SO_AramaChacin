@@ -1,7 +1,7 @@
 
 package logica;
 
-import interfaz.HomePage;
+//import interfaz.HomePage;
 import java.util.concurrent.Semaphore;
 
 /**
