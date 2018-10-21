@@ -21,7 +21,7 @@ public class Aplicacion {
     private Semaphore sProductorPantalla, sMutexPantalla;
     private Semaphore sProductorCable, sMutexCable;
     private Semaphore sConsumidorBateria, sConsumidorPantalla, sConsumidorCable;
-    private Semaphore sContador;
+    private Semaphore sContador, sUnidadesFinales;
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
     private static int celularesEnsamblados;
@@ -62,6 +62,7 @@ public class Aplicacion {
         this.sConsumidorCable = new Semaphore(0);
         this.sMutexCable = new Semaphore(1);
         this.sContador = new Semaphore(1);
+        this.sUnidadesFinales = new Semaphore(1);
         this.proximoProducirB = 0;
         this.proximoProducirP = 0;
         this.proximoProducirC = 0;
@@ -77,7 +78,7 @@ public class Aplicacion {
         this.cronometrador = new Cronometrador(sContador, this.param);
         this.cronometrador.start();
         
-        this.gerente = new Gerente(sContador, this.param, this.cronometrador);
+        this.gerente = new Gerente(sContador, this.param, this.cronometrador, this.sUnidadesFinales);
         this.gerente.start();
         
         this.inicializarEnsamblador();
@@ -215,7 +216,7 @@ public class Aplicacion {
         int cont=0;
         for(int i = 0; i < this.ensambladores.length; i++){
             if(this.ensambladores[i] == null){
-                this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
+                this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.sUnidadesFinales, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
                 this.ensambladores[i].start();
                 this.cantEnsambladores++;
                 break;

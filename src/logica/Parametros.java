@@ -27,6 +27,21 @@ public class Parametros {
                 numIniEnsamb,
                 numMaxEnsamb;
     
+    private final int DEFAULT_UN_DIA_EN_SEGS = 10,
+                      DEFAULT_NUM_DIAS_ENTRE_DESPACHOS = 10,
+                      DEFAULT_MAX_ALMAC_BATERIAS = 25,
+                      DEFAULT_MAX_ALMAC_PANTALLAS = 30,
+                      DEFAULT_MAX_ALMAC_CABLES = 35,
+                      DEFAULT_NUM_INI_PROD_BAT = 2,
+                      DEFAULT_NUM_MAX_PROD_BAT = 4,
+                      DEFAULT_NUM_INI_PROD_PAN = 3,
+                      DEFAULT_NUM_MAX_PROD_PAN = 8,
+                      DEFAULT_NUM_INI_PROD_CAB = 1,
+                      DEFAULT_NUM_MAX_PROD_CAB = 3,
+                      DEFAULT_NUM_INI_ENSAMB = 1,
+                      DEFAULT_NUM_MAX_ENSAMB = 5;
+                      
+    
     public Parametros(String archivo){
         try{
             FileReader fr=new FileReader(archivo);
@@ -41,25 +56,155 @@ public class Parametros {
             line=br.readLine();
             
             //Comienza a guardar en el vector sólo en la 5ta línea.
+            //Los datos están separados por 2 \t
             String str[] = line.split("\t\t");
             
-            this.unDiaEnSegs = Integer.parseInt(str[0]);
-            this.numDiasEntreDespachos = Integer.parseInt(str[1]);
-            this.maxAlmacBaterias = Integer.parseInt(str[2]);
-            this.maxAlmacPantallas = Integer.parseInt(str[3]);
-            this.maxAlmacCables = Integer.parseInt(str[4]);
-            this.numIniProdBat = Integer.parseInt(str[5]);
-            this.numMaxProdBat = Integer.parseInt(str[6]);
-            this.numIniProdPan = Integer.parseInt(str[7]);
-            this.numMaxProdPan = Integer.parseInt(str[8]);
-            this.numIniProdCab = Integer.parseInt(str[9]);
-            this.numMaxProdCab = Integer.parseInt(str[10]);
-            this.numIniEnsamb = Integer.parseInt(str[11]);
-            this.numMaxEnsamb = Integer.parseInt(str[12]);
+            // Validacion
+            if(esIntPositivo(str[0])){
+                this.unDiaEnSegs = Integer.parseInt(str[0]);
+            } else {
+                this.unDiaEnSegs = DEFAULT_UN_DIA_EN_SEGS;
+            }
             
+            if(esIntPositivo(str[1])){
+                this.numDiasEntreDespachos = Integer.parseInt(str[1]);
+            } else {
+                this.numDiasEntreDespachos = DEFAULT_NUM_DIAS_ENTRE_DESPACHOS;
+            }
+            
+            if(esIntPositivo(str[2])){
+                this.maxAlmacBaterias = Integer.parseInt(str[2]);
+            } else {
+                this.maxAlmacBaterias = DEFAULT_MAX_ALMAC_BATERIAS;
+            }
+            
+            if(esIntPositivo(str[3])){
+                this.maxAlmacPantallas = Integer.parseInt(str[3]);
+            } else {
+                this.maxAlmacPantallas = DEFAULT_MAX_ALMAC_PANTALLAS;
+            }
+            
+            if(esIntPositivo(str[4])){
+                this.maxAlmacCables = Integer.parseInt(str[4]);
+            } else {
+                this.maxAlmacCables = DEFAULT_MAX_ALMAC_CABLES;
+            }
+            
+            if(esIntNoNegativo(str[5])){
+                this.numIniProdBat = Integer.parseInt(str[5]);
+            } else {
+                this.numIniProdBat = DEFAULT_NUM_INI_PROD_BAT;
+            }
+            
+            if(esIntPositivo(str[6])){
+                // Validar que el inicial no sea mayor que el máximo
+                if(this.numIniProdBat <= Integer.parseInt(str[6])){
+                    this.numMaxProdBat = Integer.parseInt(str[6]);
+                } else {
+                    this.numMaxProdBat = this.numIniProdBat;
+                }
+            } else {
+                // Intentar asignar el default (comprobar que no sea menor que el mínimo)
+                if(this.numIniProdBat <= DEFAULT_NUM_MAX_PROD_BAT){
+                    this.numMaxProdBat = DEFAULT_NUM_MAX_PROD_BAT;
+                } else {
+                    this.numMaxProdBat = this.numIniProdBat;
+                }
+            }
+            
+            if(esIntNoNegativo(str[7])){
+                this.numIniProdPan = Integer.parseInt(str[7]);
+            } else {
+                this.numIniProdPan = DEFAULT_NUM_INI_PROD_PAN;
+            }
+            
+            if(esIntPositivo(str[8])){
+                // Validar que el inicial no sea mayor que el máximo
+                if(this.numIniProdPan <= Integer.parseInt(str[8])){
+                    this.numMaxProdPan = Integer.parseInt(str[8]);
+                } else {
+                    this.numMaxProdPan = this.numIniProdPan;
+                }
+            } else {
+                // Intentar asignar el default (comprobar que no sea menor que el mínimo)
+                if(this.numIniProdPan <= DEFAULT_NUM_MAX_PROD_PAN){
+                    this.numMaxProdPan = DEFAULT_NUM_MAX_PROD_PAN;
+                } else {
+                    this.numMaxProdPan = this.numIniProdPan;
+                }
+            }
+            
+            if(esIntNoNegativo(str[9])){
+                this.numIniProdCab = Integer.parseInt(str[9]);
+            } else {
+                this.numIniProdCab = DEFAULT_NUM_INI_PROD_CAB;
+            }
+            
+            if(esIntPositivo(str[8])){
+                // Validar que el inicial no sea mayor que el máximo
+                if(this.numIniProdCab <= Integer.parseInt(str[10])){
+                    this.numMaxProdCab = Integer.parseInt(str[10]);
+                } else {
+                    this.numMaxProdCab = this.numIniProdCab;
+                }
+            } else {
+                // Intentar asignar el default (comprobar que no sea menor que el mínimo)
+                if(this.numIniProdCab <= DEFAULT_NUM_MAX_PROD_CAB){
+                    this.numMaxProdCab = DEFAULT_NUM_MAX_PROD_CAB;
+                } else {
+                    this.numMaxProdCab = this.numIniProdCab;
+                }
+            }
+            
+            if(esIntNoNegativo(str[11])){
+                this.numIniEnsamb = Integer.parseInt(str[11]);
+            } else {
+                this.numIniEnsamb = DEFAULT_NUM_INI_ENSAMB;
+            }
+            
+            if(esIntPositivo(str[12])){
+                // Validar que el inicial no sea mayor que el máximo
+                if(this.numIniEnsamb <= Integer.parseInt(str[12])){
+                    this.numMaxEnsamb = Integer.parseInt(str[12]);
+                } else {
+                    this.numMaxEnsamb = this.numIniEnsamb;
+                }
+            } else {
+                // Intentar asignar el default (comprobar que no sea menor que el mínimo)
+                if(this.numIniEnsamb <= DEFAULT_NUM_MAX_ENSAMB){
+                    this.numMaxEnsamb = DEFAULT_NUM_MAX_ENSAMB;
+                } else {
+                    this.numMaxEnsamb = this.numIniEnsamb;
+                }
+            }
             
         }catch(IOException e){
             System.out.println("Archivo no encontrado");
+        }
+    }
+    
+    public boolean esIntNoNegativo(String valor){
+        try{
+            int x = Integer.parseInt(valor);
+            if (x<0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    public boolean esIntPositivo(String valor){
+        if(esIntNoNegativo(valor)){
+            if(Integer.parseInt(valor) > 0){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 
