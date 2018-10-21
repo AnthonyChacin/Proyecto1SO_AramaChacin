@@ -64,13 +64,13 @@ public class Ensamblador extends Thread {
                 sMutexC.acquire();
                 this.consumir(aCables, 3);
                 sMutexC.release();
-
-                Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
-                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
                 
                 sPC.release(2);
                 sPP.release();
                 sPB.release();
+                
+                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
+                Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
