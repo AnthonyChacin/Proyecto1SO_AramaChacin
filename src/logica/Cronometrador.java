@@ -35,7 +35,7 @@ public class Cronometrador extends Thread {
         
         int horasE = (int)this.horasEscribiendo;
         int horasD = (int)this.horasDurmiendo;
-        String estatus1 = "Disminuyendo contador";
+        String estatus1 = "Modificando contador";
         String estatus2 = "Durmiendo";
         
         while(true){
