@@ -40,7 +40,7 @@ public class Cronometrador extends Thread {
         
         while(true){
             try {
-                
+                Thread.sleep(horasD);
                 this.sContador.acquire();
                 this.estatus = estatus1;
                 Thread.sleep(horasE);
@@ -51,7 +51,6 @@ public class Cronometrador extends Thread {
                 }
                 sContador.release();
                 this.estatus = estatus2;
-                Thread.sleep(horasD);
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cronometrador.class.getName()).log(Level.SEVERE, null, ex);
