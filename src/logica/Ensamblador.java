@@ -15,18 +15,22 @@ public class Ensamblador extends Thread {
     //Todos los almacenes
     private Almacen aBaterias, aPantallas, aCables;
 
-    //Semaforos para poderproducir en los tres almacenes
+    //Semaforos para poder producir en los tres almacenes
     private Semaphore sPB, sPP, sPC;
 
     //Semaforos para consumir de los tres almacenes
     private Semaphore sCB, sCP, sCC;
-
+    
+    //Semaforo para controlar el acceso al contador de unidades finales.
+    //Esto es para evitar que el ensamblador y el gerente intenten modificar el número de celulares al mismo tiempo
+    private Semaphore sUF; //UF: Unidades Finales
+            
     //Semaforos para la exclusión mutua de la zona crítica los tres almacenes 
     private Semaphore sMutexB, sMutexP, sMutexC;
     private int proxCB, proxCP, proxCC;
     private boolean contratado = true;
 
-    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Parametros param, int proxCB, int proxCP, int proxCC) {
+    public Ensamblador(Almacen aBaterias, Almacen aPantallas, Almacen aCables, Semaphore sPB, Semaphore sPP, Semaphore sPC, Semaphore sCB, Semaphore sCP, Semaphore sCC, Semaphore sMutexB, Semaphore sMutexP, Semaphore sMutexC, Semaphore sUF, Parametros param, int proxCB, int proxCP, int proxCC) {
         this.aBaterias = aBaterias;
         this.aPantallas = aPantallas;
         this.aCables = aCables;
@@ -39,6 +43,7 @@ public class Ensamblador extends Thread {
         this.sMutexB = sMutexB;
         this.sMutexP = sMutexP;
         this.sMutexC = sMutexC;
+        this.sUF = sUF;
         this.param = param;
         this.proxCB = proxCB;
         this.proxCP = proxCP;
@@ -64,14 +69,17 @@ public class Ensamblador extends Thread {
                 sMutexC.acquire();
                 this.consumir(aCables, 3);
                 sMutexC.release();
-
-                Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
-                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
                 
                 sPC.release(2);
                 sPP.release();
                 sPB.release();
-
+                
+                Thread.sleep(this.param.getUnDiaEnSegs() * 1000 * 2);
+                
+                sUF.acquire();
+                Aplicacion.setCelularesEnsamblados(Aplicacion.getCelularesEnsamblados() + 1);
+                sUF.release();
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(Ensamblador.class.getName()).log(Level.SEVERE, null, ex);
             }

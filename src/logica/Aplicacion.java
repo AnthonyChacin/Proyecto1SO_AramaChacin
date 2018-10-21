@@ -1,7 +1,7 @@
 
 package logica;
 
-//import interfaz.HomePage;
+import interfaz.HomePage;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -21,17 +21,29 @@ public class Aplicacion {
     private Semaphore sProductorPantalla, sMutexPantalla;
     private Semaphore sProductorCable, sMutexCable;
     private Semaphore sConsumidorBateria, sConsumidorPantalla, sConsumidorCable;
-    private Semaphore sContador;
+    private Semaphore sContador, sUnidadesFinales;
     private int proximoProducirB, proximoProducirP, proximoProducirC;
     private int proximoConsumirB, proximoConsumirP, proximoConsumirC;
     private static int celularesEnsamblados;
     private int cantProductoresB, cantProductoresP, cantProductoresC, cantEnsambladores; 
     
     public Aplicacion(){
-        main();
+        main2();
     }
     
-    public void main(){
+    public static void main(String args[]){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new HomePage().setVisible(true);
+            }
+        });
+    }
+    
+    public void main2(){
+        
+        
+        
         param = new Parametros("parametros_fabrica.txt");
         this.aBaterias = new Almacen(param.getMaxAlmacBaterias());
         this.aPantallas = new Almacen(param.getMaxAlmacPantallas());
@@ -50,6 +62,7 @@ public class Aplicacion {
         this.sConsumidorCable = new Semaphore(0);
         this.sMutexCable = new Semaphore(1);
         this.sContador = new Semaphore(1);
+        this.sUnidadesFinales = new Semaphore(1);
         this.proximoProducirB = 0;
         this.proximoProducirP = 0;
         this.proximoProducirC = 0;
@@ -65,7 +78,7 @@ public class Aplicacion {
         this.cronometrador = new Cronometrador(sContador, this.param);
         this.cronometrador.start();
         
-        this.gerente = new Gerente(sContador, this.param, this.cronometrador);
+        this.gerente = new Gerente(sContador, this.param, this.cronometrador, this.sUnidadesFinales);
         this.gerente.start();
         
         this.inicializarEnsamblador();
@@ -203,7 +216,7 @@ public class Aplicacion {
         int cont=0;
         for(int i = 0; i < this.ensambladores.length; i++){
             if(this.ensambladores[i] == null){
-                this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
+                this.ensambladores[i] = new Ensamblador(aBaterias,aPantallas,aCables,this.sProductorBateria,this.sProductorPantalla,this.sProductorCable,this.sConsumidorBateria,this.sConsumidorPantalla,this.sConsumidorCable,this.sMutexBateria,this.sMutexPantalla,this.sMutexCable, this.sUnidadesFinales, this.param, this.proximoConsumirB, this.proximoConsumirP, this.proximoConsumirC);
                 this.ensambladores[i].start();
                 this.cantEnsambladores++;
                 break;

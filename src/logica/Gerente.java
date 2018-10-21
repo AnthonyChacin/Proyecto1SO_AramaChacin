@@ -14,7 +14,7 @@ import logica.Aplicacion;
 public class Gerente extends Thread{
     
     Random r = new Random();
-    private Semaphore sContador;
+    private Semaphore sContador, sUF;
     private Cronometrador cronometrador;
     private double horaMayor;
     private double horaMenor;
@@ -24,9 +24,10 @@ public class Gerente extends Thread{
     private Parametros param;
     private int msTiempoDeEspera = 1500;
     
-    public Gerente(Semaphore sContador, Parametros param, Cronometrador cronometrador){
+    public Gerente(Semaphore sContador, Parametros param, Cronometrador cronometrador, Semaphore sUF){
         
         this.sContador = sContador;
+        this.sUF = sUF;
         this.param = param;
         this.diaEnSegundos = this.param.getUnDiaEnSegs();
         this.horaMayor = ((this.diaEnSegundos*1000)/24)*18;
@@ -55,9 +56,13 @@ public class Gerente extends Thread{
                 this.status = "Leyendo";
                 Thread.sleep(this.msTiempoDeEspera);
                 if(this.cronometrador.getContador() == 0){
+                    
                     this.status = estatus2;
-                    Aplicacion.setCelularesEnsamblados(0);
+                    
+                    sUF.acquire();
                     Thread.sleep(this.msTiempoDeEspera);
+                    Aplicacion.setCelularesEnsamblados(0);
+                    sUF.release();
                 }
                 sContador.release();
                 

@@ -19,7 +19,7 @@ public class ProductorPantalla extends Productor {
     public void run() {
         while (this.contratado) {
             try {
-                
+                //Determinar de acuerdo al tipo de productor cuanto tiempo va a tradar por cada cosa que produzca
                 sP.acquire();
                 Thread.sleep(param.getUnDiaEnSegs()*1000*2);
                 sMutex.acquire();
