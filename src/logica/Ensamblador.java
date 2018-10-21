@@ -94,7 +94,7 @@ public class Ensamblador extends Thread {
             case 3:
                 almacen.setVAlmacen(this.proxCC, 0);
                 this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
-                //almacen.setVAlmacen(this.proxCC, 0);
+                almacen.setVAlmacen(this.proxCC, 0);
                 this.proxCC = (this.proxCC + 1) % almacen.getTAlmacen();
                 almacen.cantUnidades--;
                 almacen.cantUnidades--;
