@@ -1,7 +1,7 @@
 
 package logica;
 
-//import interfaz.HomePage;
+import interfaz.HomePage;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -28,10 +28,22 @@ public class Aplicacion {
     private int cantProductoresB, cantProductoresP, cantProductoresC, cantEnsambladores; 
     
     public Aplicacion(){
-        main();
+        main2();
     }
     
-    public void main(){
+    public static void main(String args[]){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new HomePage().setVisible(true);
+            }
+        });
+    }
+    
+    public void main2(){
+        
+        
+        
         param = new Parametros("parametros_fabrica.txt");
         this.aBaterias = new Almacen(param.getMaxAlmacBaterias());
         this.aPantallas = new Almacen(param.getMaxAlmacPantallas());
